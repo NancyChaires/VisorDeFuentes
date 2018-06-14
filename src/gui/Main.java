@@ -5,19 +5,62 @@
  */
 package gui;
 
+import classes.TextoConFormato;
+import java.awt.Font;
+import javax.swing.ButtonGroup;
+
 /**
  *
- * @author josemtz
  */
 public class Main extends javax.swing.JFrame {
-
+    private final String TEXTO_PREDET = "Instituto Tecnológico de Campeche";
+    private TextoConFormato txt;
+    private ButtonGroup radioGroup;
     /**
      * Creates new form Main
      */
     public Main() {
         initComponents();
+        this.radioGroup = new ButtonGroup();
+        this.radioGroup.add(radioButtonPequenio);
+        this.radioGroup.add(radioButtonMediano);
+        this.radioGroup.add(radioButtonGrande);
+        txt = new TextoConFormato(TEXTO_PREDET);
+        this.radioButtonGrande.setSelected(true);
+        etiquetaTexto.setText(TEXTO_PREDET);
+        update();
     }
 
+    private void actualizarVista() {
+        etiquetaTexto.setText(txt.getTexto());
+        etiquetaTexto.setFont(txt.getFont());
+    }
+    
+    private void actualizarModelo() {
+        txt.setTexto(etiquetaTexto.getText());
+        txt.setFuente((String) comboBoxFuente.getSelectedItem());
+        txt.setEstilo(Font.PLAIN);
+        if (checkBoxNegritas.isSelected()) {
+            txt.setEstilo(txt.getEstilo() + Font.BOLD);
+        }
+        if (checkBoxCursivas.isSelected()) {
+            txt.setEstilo(txt.getEstilo() + Font.ITALIC);
+        }
+        if (radioButtonPequenio.isSelected()) {
+            txt.setTamanio(TextoConFormato.TAMANIO_PEQUENIO);
+        }
+        else if (radioButtonMediano.isSelected()) {
+            txt.setTamanio(TextoConFormato.TAMANIO_MEDIANO);
+        }
+        else {
+            txt.setTamanio(TextoConFormato.TAMANIO_GRANDE);
+        }
+    }
+    
+    private void update(){
+        actualizarModelo();
+        actualizarVista();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,26 +70,30 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
-        jLabel1 = new javax.swing.JLabel();
+        etiquetaTexto = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        comboBoxFuente = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
+        checkBoxNegritas = new javax.swing.JCheckBox();
+        checkBoxCursivas = new javax.swing.JCheckBox();
         jPanel3 = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
+        radioButtonPequenio = new javax.swing.JRadioButton();
+        radioButtonMediano = new javax.swing.JRadioButton();
+        radioButtonGrande = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        etiquetaTexto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        etiquetaTexto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Fuente"));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Arial", "Times New Roman", "Calibri", "Verdana", "Tahoma", "Consolas" }));
+        comboBoxFuente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Arial", "Ubuntu", "Times New Roman", "Calibri", "Verdana", "Tahoma", "Consolas" }));
+        comboBoxFuente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxFuenteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -54,21 +101,31 @@ public class Main extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jComboBox1, 0, 148, Short.MAX_VALUE)
+                .addComponent(comboBoxFuente, 0, 148, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(comboBoxFuente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Estilo"));
 
-        jCheckBox1.setText("Negrita");
+        checkBoxNegritas.setText("Negrita");
+        checkBoxNegritas.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                checkBoxNegritasStateChanged(evt);
+            }
+        });
 
-        jCheckBox2.setText("Cursiva");
+        checkBoxCursivas.setText("Cursiva");
+        checkBoxCursivas.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                checkBoxCursivasStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -77,26 +134,41 @@ public class Main extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCheckBox1)
-                    .addComponent(jCheckBox2))
+                    .addComponent(checkBoxNegritas)
+                    .addComponent(checkBoxCursivas))
                 .addContainerGap(82, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jCheckBox1)
+                .addComponent(checkBoxNegritas)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox2)
+                .addComponent(checkBoxCursivas)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Tamaño"));
 
-        jRadioButton1.setText("Pequeño");
+        radioButtonPequenio.setText("Pequeño");
+        radioButtonPequenio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioButtonPequenioActionPerformed(evt);
+            }
+        });
 
-        jRadioButton2.setText("Mediano");
+        radioButtonMediano.setText("Mediano");
+        radioButtonMediano.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioButtonMedianoActionPerformed(evt);
+            }
+        });
 
-        jRadioButton3.setText("Grande");
+        radioButtonGrande.setText("Grande");
+        radioButtonGrande.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioButtonGrandeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -105,20 +177,20 @@ public class Main extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jRadioButton3))
+                    .addComponent(radioButtonPequenio)
+                    .addComponent(radioButtonMediano)
+                    .addComponent(radioButtonGrande))
                 .addContainerGap(68, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jRadioButton1)
+                .addComponent(radioButtonPequenio)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton2)
+                .addComponent(radioButtonMediano)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton3)
-                .addGap(0, 131, Short.MAX_VALUE))
+                .addComponent(radioButtonGrande)
+                .addGap(0, 75, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -128,7 +200,7 @@ public class Main extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(etiquetaTexto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -141,7 +213,7 @@ public class Main extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(etiquetaTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -152,6 +224,30 @@ public class Main extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void comboBoxFuenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxFuenteActionPerformed
+        update();
+    }//GEN-LAST:event_comboBoxFuenteActionPerformed
+
+    private void checkBoxNegritasStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_checkBoxNegritasStateChanged
+        update();
+    }//GEN-LAST:event_checkBoxNegritasStateChanged
+
+    private void checkBoxCursivasStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_checkBoxCursivasStateChanged
+        update();
+    }//GEN-LAST:event_checkBoxCursivasStateChanged
+
+    private void radioButtonPequenioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioButtonPequenioActionPerformed
+        update();
+    }//GEN-LAST:event_radioButtonPequenioActionPerformed
+
+    private void radioButtonMedianoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioButtonMedianoActionPerformed
+        update();
+    }//GEN-LAST:event_radioButtonMedianoActionPerformed
+
+    private void radioButtonGrandeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioButtonGrandeActionPerformed
+        update();
+    }//GEN-LAST:event_radioButtonGrandeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -189,16 +285,15 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JCheckBox checkBoxCursivas;
+    private javax.swing.JCheckBox checkBoxNegritas;
+    private javax.swing.JComboBox<String> comboBoxFuente;
+    private javax.swing.JLabel etiquetaTexto;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
+    private javax.swing.JRadioButton radioButtonGrande;
+    private javax.swing.JRadioButton radioButtonMediano;
+    private javax.swing.JRadioButton radioButtonPequenio;
     // End of variables declaration//GEN-END:variables
 }
